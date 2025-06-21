@@ -9,6 +9,7 @@ import org.example.disproject.repository.WordRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +27,8 @@ public class WordService {
 
     public void sendWord(SendWordFormDto formDto) {
         emailService.sendWord(formDto.getEmail(), formDto.getWord());
+    }
+    public List<Word> findAll() {
+        return wordRepository.findAll();
     }
 }
