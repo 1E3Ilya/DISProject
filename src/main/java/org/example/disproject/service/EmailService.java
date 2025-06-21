@@ -3,7 +3,9 @@ package org.example.disproject.service;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 import org.example.disproject.entity.UsedEmail;
+import org.example.disproject.entity.Word;
 import org.example.disproject.repository.UsedEmailRepository;
+import org.example.disproject.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class EmailService {
     private String senderEmail;
 
     private final UsedEmailRepository usedEmailRepository;
+    private final WordRepository wordRepository;
 
     public void sendWord(String email, String word) {
 
@@ -50,6 +53,7 @@ public class EmailService {
                 throw new RuntimeException("error " + response.code());
             }
             usedEmailRepository.save(new UsedEmail().setEmail(email).setUsedAt(LocalDateTime.now()));
+            wordRepository.save(new Word().setWord(word).setCreatedAt(LocalDateTime.now()));
         } catch (IOException e) {
             throw new RuntimeException("error brevo ", e);
         }
